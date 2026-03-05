@@ -57,9 +57,7 @@ export default function App() {
     setErro('');
     
     try {
-      const resposta = await axios.post('surpresa-backend-production.up.railway.app/api/cofre/desbloquear', {
-        senha: senha
-      });
+      const resposta = await axios.post('https://surpresa-backend-production.up.railway.app/api/cofre/desbloquear', { senha: senha });
       setSurpresa(resposta.data);
       setTelaAtual('CARTA');
       
