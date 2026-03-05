@@ -19,7 +19,7 @@ export default function App() {
 
   // 1. Lógica do Cronômetro
   useEffect(() => {
-    const dataAlvo = new Date('2026-03-06T00:00:00').getTime();
+    const dataAlvo = new Date('2026-03-02T00:00:00').getTime();
     const intervalo = setInterval(() => {
       const agora = new Date().getTime();
       const diferenca = dataAlvo - agora;
