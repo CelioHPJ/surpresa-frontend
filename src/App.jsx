@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import { Lock, Unlock, Heart, Sparkles, X, Camera, Music, Volume2, VolumeX } from 'lucide-react';
 
 export default function App() {
@@ -19,7 +18,7 @@ export default function App() {
 
   // 1. Lógica do Cronômetro
   useEffect(() => {
-    const dataAlvo = new Date('2026-03-02T00:00:00').getTime();
+    const dataAlvo = new Date('2026-03-06T00:00:00').getTime();
     const intervalo = setInterval(() => {
       const agora = new Date().getTime();
       const diferenca = dataAlvo - agora;
@@ -51,23 +50,35 @@ export default function App() {
     setTocando(!tocando);
   };
 
-  // 3. Desbloquear e Iniciar Música automaticamente
-  const tentarDesbloquear = async (e) => {
+  // 3. Desbloquear (LÓGICA LOCAL SEGURA)
+  const tentarDesbloquear = (e) => {
     e.preventDefault();
     setErro('');
     
-    try {
-      const resposta = await axios.post('https://surpresa-backend-production.up.railway.app/api/cofre/desbloquear', { senha: senha });
-      setSurpresa(resposta.data);
+    // =========================================================
+    // CÉLIO: ALTERE A SENHA E O TEXTO DA CARTA AQUI!
+    // =========================================================
+    const SENHA_CORRETA = "celio"; 
+    
+    const MINHA_CARTA = 'Feliz 6 meses para nós, meu amor! Parece que foi ontem que a nossa história começou, mas ao mesmo tempo, sinto como se você sempre tivesse feito parte da minha vida. Nesses seis meses, cada risada, cada abraço e cada momento que dividimos só me confirmam o quanto eu sou sortudo por ter você do meu lado. Obrigado por ser minha melhor companhia e por deixar meus dias muito mais felizes e completos. Que esse seja só o começo de tudo que ainda vamos viver juntos. Te amo muito!'
+    // =========================================================
+
+    // Validação ignorando maiúsculas e espaços em branco
+    if (senha.toLowerCase().trim() === SENHA_CORRETA.toLowerCase().trim()) {
+      setSurpresa({
+        mensagem: MINHA_CARTA,
+        pergunta: "Quem disse 'Eu te amo' primeiro?" 
+      });
+      
       setTelaAtual('CARTA');
       
-      // Tenta dar o play quando ela desbloqueia (garante que o som comece no momento ápice)
-      if (!tocando) {
-        audioRef.current.play();
+      // Tenta dar o play quando ela desbloqueia
+      if (audioRef.current) {
+        audioRef.current.play().catch(e => console.log("Erro ao tocar:", e));
         setTocando(true);
       }
-    } catch (err) {
-      setErro(err.response?.data?.erro || "Ih, o servidor do Célio tá offline! 🔌");
+    } else {
+      setErro("Resposta incorreta! Tenta de novo, amor.. ❤️");
     }
   };
 
@@ -84,7 +95,6 @@ export default function App() {
           ${tocando ? 'bg-red-500 text-white animate-spin-slow' : 'bg-white text-red-500 border-2 border-red-100'}`}
       >
         {tocando ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
-        {/* Tooltip fofinho */}
         <span className="absolute right-16 bg-white text-red-500 px-3 py-1 rounded-lg text-xs font-bold shadow-sm border border-red-50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
           Nossa trilha sonora 🎵
         </span>
@@ -144,7 +154,7 @@ export default function App() {
           <Heart className="w-16 h-16 text-red-500 mb-6 animate-pulse" fill="currentColor" />
           <h2 className="text-3xl md:text-4xl font-black text-red-600 mb-8 text-center uppercase tracking-tighter">6 Meses com Você ❤️</h2>
           <div className="bg-red-50/50 p-6 md:p-10 rounded-[2rem] border-2 border-dashed border-red-200 w-full mb-10 whitespace-pre-line text-red-900 text-lg md:text-xl leading-relaxed text-center font-medium italic">
-            "{surpresa.mensagem}"
+            {surpresa.mensagem}
           </div>
           <button onClick={() => setMostrarGaleria(true)} className="group bg-red-500 hover:bg-red-600 text-white font-black py-5 px-10 rounded-full transition-all flex items-center gap-4 shadow-xl hover:-translate-y-1">
             <Camera className="w-6 h-6 group-hover:rotate-12 transition-transform" /> VER NOSSA GALERIA
@@ -162,7 +172,6 @@ export default function App() {
             <h3 className="text-white text-4xl font-black uppercase tracking-widest">Nossos Momentos</h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl pb-20">
-             {/* Aqui você repete os blocos de fotos de 1 a 6 como no código anterior */}
              {[1,2,3,4,5,6].map((num) => (
                 <div key={num} className={`bg-white p-4 pt-4 pb-12 rounded-sm shadow-2xl transition-all duration-300 ${num % 2 === 0 ? 'rotate-2' : '-rotate-2'} hover:rotate-0`}>
                   <img src={`/fotos/foto${num}.jpeg`} alt={`Foto ${num}`} className="w-full h-64 object-cover grayscale-[20%] hover:grayscale-0 transition-all" />
