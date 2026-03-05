@@ -178,7 +178,7 @@ export default function App() {
     </div>
 
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl pb-20">
-       {[1,2,3,4,5,6].map((num) => (
+       {[1,2,3,4,5,6,7,8].map((num) => (
           <div key={num} className={`bg-white p-4 pt-4 pb-12 rounded-sm shadow-2xl transition-all duration-300 ${num % 2 === 0 ? 'rotate-2' : '-rotate-2'} hover:rotate-0`}>
             <img src={`/fotos/foto${num}.jpeg`} alt={`Foto ${num}`} className="w-full h-64 object-cover grayscale-[20%] hover:grayscale-0 transition-all" />
             <p className="text-gray-700 font-serif text-xl mt-6 text-center italic">                    </p>
