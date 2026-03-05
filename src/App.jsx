@@ -57,7 +57,7 @@ export default function App() {
     setErro('');
     
     try {
-      const resposta = await axios.post('http://127.0.0.1:8080/api/cofre/desbloquear', {
+      const resposta = await axios.post('surpresa-backend-production.up.railway.app/api/cofre/desbloquear', {
         senha: senha
       });
       setSurpresa(resposta.data);
