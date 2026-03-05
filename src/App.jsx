@@ -164,23 +164,29 @@ export default function App() {
 
       {/* ================= MODAL DA GALERIA ================= */}
       {mostrarGaleria && (
-        <div className="fixed inset-0 bg-red-900/95 z-50 flex flex-col items-center justify-start p-6 overflow-y-auto backdrop-blur-sm">
-          <button onClick={() => setMostrarGaleria(false)} className="fixed top-8 right-8 bg-white text-red-600 p-3 rounded-full shadow-2xl hover:scale-110 transition-transform z-[110]">
-            <X className="w-8 h-8" strokeWidth={3} />
-          </button>
-          <div className="mt-12 mb-10 text-center">
-            <h3 className="text-white text-4xl font-black uppercase tracking-widest">Nossos Momentos</h3>
+  <div className="fixed inset-0 bg-red-900/95 z-50 flex flex-col items-center justify-start p-6 overflow-y-auto backdrop-blur-sm">
+    <button onClick={() => setMostrarGaleria(false)} className="fixed top-8 right-8 bg-white text-red-600 p-3 rounded-full shadow-2xl hover:scale-110 transition-transform z-[110]">
+      <X className="w-8 h-8" strokeWidth={3} />
+    </button>
+    
+    <div className="mt-12 mb-10 text-center">
+      <h3 className="text-white text-4xl font-black uppercase tracking-widest">Nossos Momentos</h3>
+      {/* Aqui entra o seu texto novo */}
+      <p className="text-white/80 mt-4 text-lg font-light tracking-wide max-w-xl mx-auto">
+        Um pouquinho da nossa historia... 
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl pb-20">
+       {[1,2,3,4,5,6].map((num) => (
+          <div key={num} className={`bg-white p-4 pt-4 pb-12 rounded-sm shadow-2xl transition-all duration-300 ${num % 2 === 0 ? 'rotate-2' : '-rotate-2'} hover:rotate-0`}>
+            <img src={`/fotos/foto${num}.jpeg`} alt={`Foto ${num}`} className="w-full h-64 object-cover grayscale-[20%] hover:grayscale-0 transition-all" />
+            <p className="text-gray-700 font-serif text-xl mt-6 text-center italic"></p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl pb-20">
-             {[1,2,3,4,5,6].map((num) => (
-                <div key={num} className={`bg-white p-4 pt-4 pb-12 rounded-sm shadow-2xl transition-all duration-300 ${num % 2 === 0 ? 'rotate-2' : '-rotate-2'} hover:rotate-0`}>
-                  <img src={`/fotos/foto${num}.jpeg`} alt={`Foto ${num}`} className="w-full h-64 object-cover grayscale-[20%] hover:grayscale-0 transition-all" />
-                  <p className="text-gray-700 font-serif text-xl mt-6 text-center italic">Momentos inesquecíveis...</p>
-                </div>
-             ))}
-          </div>
-        </div>
-      )}
+       ))}
+    </div>
+  </div>
+)}
     </div>
   );
 }
